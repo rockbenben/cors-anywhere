@@ -1,0 +1,12 @@
+# 构建 Docker 镜像
+sudo docker build -t cors-anywhere .
+
+# 运行 Docker 容器
+sudo docker run -d --name cors-anywhere -p 49152:8080 cors-anywhere
+
+# 将镜像发布到 DockerHub
+echo "您的密码" | docker login --username=rockben --password-stdin
+
+# 更新最新版本号和 latest 标签
+docker build -t rockben/cors-anywhere:0.4.6 -t rockben/cors-anywhere:latest .
+docker push --all-tags rockben/cors-anywhere
