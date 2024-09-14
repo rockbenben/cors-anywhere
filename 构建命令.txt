@@ -2,7 +2,7 @@
 sudo docker build -t cors-anywhere .
 
 # 运行 Docker 容器
-sudo docker run -d --name cors-anywhere -p 49152:8080 cors-anywhere
+sudo docker run -d -p 49152:8080 --name cors-anywhere cors-anywhere
 
 # 将镜像发布到 DockerHub
 echo "您的密码" | docker login --username=rockben --password-stdin

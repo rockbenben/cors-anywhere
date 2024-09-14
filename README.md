@@ -1,5 +1,18 @@
-[![Build Status](https://travis-ci.com/Rob--W/cors-anywhere.svg?branch=master)](https://travis-ci.com/Rob--W/cors-anywhere)
-[![Coverage Status](https://coveralls.io/repos/github/Rob--W/cors-anywhere/badge.svg?branch=master)](https://coveralls.io/github/Rob--W/cors-anywhere?branch=master)
+# cors-anywhere
+
+由于 [Rob--W/cors-anywhere](https://github.com/Rob--W/cors-anywhere) 太久没更新，因此本项目对它的依赖进行了升级，并将镜像同步到 ghro.io 和 docker hub。
+
+```bash
+## ghcr.io（国内推荐）
+docker run -d -p 49152:8080 --name cors-anywhere ghcr.io/rockbenben/cors-anywhere
+
+## docker hub
+docker run -d -p 49152:8080 --name cors-anywhere rockben/cors-anywhere
+```
+
+使用说明查看 [CORS Anywhere：解锁跨域限制](https://newzone.top/services/dockers-on-nas/cors-anywhere.html)。
+
+以下为原版介绍：
 
 **CORS Anywhere** is a NodeJS proxy which adds CORS headers to the proxied request.
 
@@ -30,6 +43,7 @@ cors_proxy.createServer({
 });
 
 ```
+
 Request examples:
 
 * `http://localhost:8080/http://google.com/` - Google.com with CORS headers
@@ -146,6 +160,7 @@ CORS Anywhere as an open proxy.
 
 For instance, to run a CORS Anywhere server that accepts any request from some example.com sites on
 port 8080, use:
+
 ```
 export PORT=8080
 export CORSANYWHERE_WHITELIST=https://example.com,http://example.com,http://example.com:8080
@@ -166,7 +181,6 @@ export CORSANYWHERE_BLACKLIST=https://abuse.example.com,http://abuse.example.com
 export CORSANYWHERE_RATELIMIT='50 3 my.example.com my2.example.com'
 node server.js
 ```
-
 
 ## License
 
