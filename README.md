@@ -1,6 +1,6 @@
 # cors-anywhere
 
-由于 [Rob--W/cors-anywhere](https://github.com/Rob--W/cors-anywhere) 太久没更新，因此本项目对它的依赖进行了升级，并将镜像同步到 ghro.io 和 docker hub。
+由于 [Rob--W/cors-anywhere](https://github.com/Rob--W/cors-anywhere) 太久没更新，因此本项目对它的依赖进行了升级，并将镜像同步到 ghcr.io 和 docker hub。
 
 ```bash
 ## ghcr.io（国内推荐）

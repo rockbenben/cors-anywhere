@@ -1,25 +1,26 @@
 # 使用 Alpine 为基础镜像，该镜像体积较小
-FROM node:lts-alpine as builder
+FROM node:lts-alpine AS builder
 
 WORKDIR /app
 
-# 将本地代码复制到镜像中
-COPY . .
+# 仅复制依赖清单，最大化缓存复用
+COPY package.json package-lock.json ./
 
-# 安装依赖
-RUN npm install && \
-    npm cache clean --force && \
-    rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
+# 仅安装生产依赖，并清理缓存
+RUN npm ci --omit=dev && \
+    npm cache clean --force
 
 # 使用多阶段构建
 FROM node:lts-alpine
 
 WORKDIR /app
 
-# 从上一个阶段拷贝构建好的 node_modules 目录和必要的文件
+ENV NODE_ENV=production
+
+# 从构建阶段拷贝 node_modules，源码直接从构建上下文拷贝
 COPY --from=builder /app/node_modules ./node_modules/
-COPY --from=builder /app/lib/ ./lib/
-COPY --from=builder /app/server.js ./server.js
+COPY lib/ ./lib/
+COPY server.js ./server.js
 
 # 设置服务运行的端口
 EXPOSE 8080
