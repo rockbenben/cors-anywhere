@@ -1,12 +1,10 @@
-# 构建 Docker 镜像
+# 仅用于本地调试。生产构建走 GitHub Actions：
+# 发布 release 或手动触发 workflow 后，会自动构建多架构镜像并推送到
+# Docker Hub (rockben/cors-anywhere) 和 GHCR (ghcr.io/rockbenben/cors-anywhere)。
+# 详见 .github/workflows/docker.yml。
+
+# 本地构建镜像
 sudo docker build -t cors-anywhere .
 
-# 运行 Docker 容器
+# 本地运行容器
 sudo docker run -d -p 49152:8080 --name cors-anywhere cors-anywhere
-
-# 将镜像发布到 DockerHub
-echo "您的密码" | docker login --username=rockben --password-stdin
-
-# 更新最新版本号和 latest 标签
-docker build -t rockben/cors-anywhere:0.4.6 -t rockben/cors-anywhere:latest .
-docker push --all-tags rockben/cors-anywhere
