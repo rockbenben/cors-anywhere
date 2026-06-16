@@ -25,12 +25,6 @@ jobs:
       - name: 🚚 Check out the repo
         uses: actions/checkout@v6
 
-      - name: Extract version from package.json
-        id: get_version
-        run: |
-          VERSION=$(jq -r '.version' package.json)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
 
@@ -57,9 +51,18 @@ jobs:
           images: |
             ${{ vars.DOCKERHUB_USERNAME }}/cors-anywhere
             ghcr.io/${{ github.repository_owner }}/cors-anywhere
+          # The Git/Release tag (e.g. v0.4.9) is the single source of truth for the
+          # image version. No package.json reads, so the two can never drift.
           tags: |
-            type=raw,value=${{ env.VERSION }}
-            type=raw,value=latest
+            # On a release tagged vX.Y.Z -> images X.Y.Z and X.Y (floating minor)
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            # Manual workflow_dispatch has no tag -> publish a sha-stamped image only,
+            # so test builds never overwrite a released version or `latest`.
+            type=sha,enable=${{ github.event_name == 'workflow_dispatch' }}
+          # Only move `latest` for real (non-prerelease) releases.
+          flavor: |
+            latest=${{ github.event_name == 'release' && !github.event.release.prerelease }}
 
       # Build and push Docker image to both Docker Hub and GHCR
       - name: Build and push Docker image
