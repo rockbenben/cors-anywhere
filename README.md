@@ -1,6 +1,6 @@
 # cors-anywhere
 
-由于 [Rob--W/cors-anywhere](https://github.com/Rob--W/cors-anywhere) 太久没更新，因此本项目对它的依赖进行了升级，并将镜像同步到 ghcr.io 和 docker hub。
+由于 [Rob--W/cors-anywhere](https://github.com/Rob--W/cors-anywhere) 太久没更新，本项目对其进行了现代化维护：核心代理库迁移到仍在活跃维护的 [http-proxy-3](https://github.com/sagemathinc/http-proxy-3)，升级全部依赖（生产依赖 0 漏洞），要求 Node 22+，并将镜像同步到 ghcr.io 和 docker hub。
 
 ```bash
 ## ghcr.io（国内推荐）
@@ -135,9 +135,9 @@ proxy requests. The following options are supported:
 
 For advanced users, the following options are also provided.
 
-* `httpProxyOptions` - Under the hood, [http-proxy](https://github.com/nodejitsu/node-http-proxy)
-  is used to proxy requests. Use this option if you really need to pass options
-  to http-proxy. The documentation for these options can be found [here](https://github.com/nodejitsu/node-http-proxy#options).
+* `httpProxyOptions` - Under the hood, [http-proxy-3](https://github.com/sagemathinc/http-proxy-3)
+  (a maintained fork of the unmaintained `http-proxy`) is used to proxy requests. Use this option if
+  you really need to pass options to it. The documentation for these options can be found [here](https://github.com/sagemathinc/http-proxy-3#options).
 * `httpsOptions` - If set, a `https.Server` will be created. The given options are passed to the
   [`https.createServer`](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener) method.
 

@@ -1,6 +1,6 @@
 var createRateLimitChecker = require('../lib/rate-limit');
 
-var lolex = require('lolex');
+var FakeTimers = require('@sinonjs/fake-timers');
 var assert = require('assert');
 
 function assertNotLimited(rateLimitReturnValue) {
@@ -24,7 +24,7 @@ function assertLimited(rateLimitReturnValue, limit, period) {
 describe('Rate limit', function() {
   var clock;
   beforeEach(function() {
-    clock = lolex.install();
+    clock = FakeTimers.install();
   });
   afterEach(function() {
     clock.uninstall();
